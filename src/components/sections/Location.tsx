@@ -18,7 +18,7 @@ export const Location = () => {
 
             <div className="space-y-6">
               <div className="flex gap-4 p-6 bg-brand-cream/50 rounded-3xl border border-brand-pink/20">
-                <MapPin className="text-brand-sage w-10 h-10 shrink-0" />
+                <MapPin className="text-brand-maroon w-10 h-10 shrink-0" />
                 <div>
                   <h4 className="font-bold text-brand-dark">Alamat Lengkap</h4>
                   <p className="text-sm text-gray-600">Buket dan dekorasi Ryya Project, Bekasi, Jawa Barat.</p>
@@ -26,7 +26,7 @@ export const Location = () => {
               </div>
               
               <div className="flex gap-4 p-6 bg-brand-cream/50 rounded-3xl border border-brand-pink/20">
-                <Navigation className="text-brand-sage w-10 h-10 shrink-0" />
+                <Navigation className="text-brand-maroon w-10 h-10 shrink-0" />
                 <div>
                   <h4 className="font-bold text-brand-dark">Area Layanan</h4>
                   <p className="text-sm text-gray-600">Melayani pengiriman lokal dan sekitarnya (Radius 15km).</p>

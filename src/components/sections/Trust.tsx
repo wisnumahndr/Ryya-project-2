@@ -15,7 +15,7 @@ export const Trust = () => {
             </h2>
             <div className="space-y-6">
               <div className="flex gap-4 p-6 bg-white rounded-3xl shadow-sm border border-brand-pink/20">
-                <div className="w-12 h-12 bg-brand-pink rounded-2xl flex items-center justify-center text-brand-sage shrink-0">
+                <div className="w-12 h-12 bg-brand-pink rounded-2xl flex items-center justify-center text-brand-maroon shrink-0">
                   <Star fill="currentColor" />
                 </div>
                 <div>
@@ -24,7 +24,7 @@ export const Trust = () => {
                 </div>
               </div>
               <div className="flex gap-4 p-6 bg-white rounded-3xl shadow-sm border border-brand-pink/20">
-                <div className="w-12 h-12 bg-brand-pink rounded-2xl flex items-center justify-center text-brand-sage shrink-0">
+                <div className="w-12 h-12 bg-brand-pink rounded-2xl flex items-center justify-center text-brand-maroon shrink-0">
                   <Quote fill="currentColor" />
                 </div>
                 <div>
@@ -51,7 +51,7 @@ export const Trust = () => {
                 >
                   <div className="flex gap-1 mb-4">
                     {[...Array(testimonial.rating)].map((_, i) => (
-                      <Star key={i} size={14} className="fill-brand-gold text-brand-gold" />
+                      <Star key={i} size={14} className="fill-brand-rose text-brand-rose" />
                     ))}
                   </div>
                   <p className="text-gray-600 italic mb-4 leading-relaxed tracking-tight group-hover:text-brand-dark transition-colors">

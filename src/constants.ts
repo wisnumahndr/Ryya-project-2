@@ -18,8 +18,7 @@ export const BOUQUET_CATEGORIES = [
 export const DECORATION_CATEGORIES = [
   'Dekorasi Wedding',
   'Dekorasi Lamaran',
-  'Dekorasi Ulang Tahun',
-  'Dekorasi Acara Lainnya'
+  'Dekorasi Ulang Tahun'
 ];
 export const WHATSAPP_LINK = (message: string) => 
   `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(message)}`;

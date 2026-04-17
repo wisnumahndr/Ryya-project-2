@@ -67,7 +67,7 @@ export const SeasonalSection = () => {
 
             <Button 
               size="lg" 
-              className="px-10 h-16 rounded-full group bg-brand-dark text-white hover:bg-brand-gold transition-all"
+              className="px-10 h-16 rounded-full group bg-brand-dark text-white hover:bg-brand-rose transition-all"
               onClick={() => window.open(WHATSAPP_LINK(`Halo Ryya Project! Saya tertarik dengan koleksi ${activeEvent.title}`), '_blank')}
             >
               Order Koleksi Spesial <ArrowRight className="ml-2 group-hover:translate-x-1 transition-transform" />

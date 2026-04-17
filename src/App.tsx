@@ -36,7 +36,7 @@ function MainWebsite() {
     <div className="relative min-h-screen">
       {/* Progress Bar */}
       <motion.div
-        className="fixed top-0 left-0 right-0 h-1 bg-brand-gold z-[100] origin-left"
+        className="fixed top-0 left-0 right-0 h-1 bg-brand-rose z-[100] origin-left"
         style={{ scaleX }}
       />
 
@@ -63,7 +63,7 @@ function MainWebsite() {
           initial={{ y: 100 }}
           animate={{ y: 0 }}
           onClick={() => window.open('https://wa.me/6281234567890?text=Halo%20Ryya%20Project!%20Saya%20ingin%20order%20buket.', '_blank')}
-          className="bg-brand-gold text-white px-6 py-4 rounded-full shadow-2xl font-bold text-sm uppercase tracking-widest flex items-center gap-2"
+          className="bg-brand-rose text-white px-6 py-4 rounded-full shadow-2xl font-bold text-sm uppercase tracking-widest flex items-center gap-2"
         >
           Order Sekarang
         </motion.button>

@@ -13,7 +13,7 @@ export const Login = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-brand-cream">
-        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-gold"></div>
+        <div className="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-brand-rose"></div>
       </div>
     );
   }
@@ -62,7 +62,7 @@ export const Login = () => {
 
         <button 
           onClick={() => navigate('/')}
-          className="text-xs text-gray-400 hover:text-brand-gold uppercase tracking-widest transition-colors"
+          className="text-xs text-gray-400 hover:text-brand-rose uppercase tracking-widest transition-colors"
         >
           Back to Website
         </button>

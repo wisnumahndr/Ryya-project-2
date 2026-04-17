@@ -24,6 +24,7 @@ export const DecorationPage = () => {
     return () => unsubscribe();
   }, []);
 
+  const categories = ['All', ...Array.from(new Set(services.map(s => s.category)))];
   const filteredServices = activeCategory === 'All' 
     ? services 
     : services.filter(s => s.category === activeCategory);
@@ -43,26 +44,20 @@ export const DecorationPage = () => {
 
           {/* Categories Filter */}
           <div className="flex flex-wrap gap-2 mb-12 justify-center">
-            <button
-              onClick={() => setActiveCategory('All')}
-              className={`px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all ${activeCategory === 'All' ? 'bg-brand-gold text-white shadow-lg' : 'bg-white text-gray-500 hover:bg-brand-pink/20 shadow-sm'}`}
-            >
-              Semua
-            </button>
-            {DECORATION_CATEGORIES.map(cat => (
+            {categories.map(cat => (
               <button
                 key={cat}
                 onClick={() => setActiveCategory(cat)}
-                className={`px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all ${activeCategory === cat ? 'bg-brand-gold text-white shadow-lg' : 'bg-white text-gray-500 hover:bg-brand-pink/20 shadow-sm'}`}
+                className={`px-6 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-all ${activeCategory === cat ? 'bg-brand-rose text-white shadow-lg' : 'bg-white text-gray-500 hover:bg-brand-pink/20 shadow-sm'}`}
               >
-                {cat}
+                {cat === 'All' ? 'Semua' : cat}
               </button>
             ))}
           </div>
 
           {loading ? (
             <div className="h-64 flex items-center justify-center">
-              <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-brand-gold"></div>
+              <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-brand-rose"></div>
             </div>
           ) : (
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
@@ -90,7 +85,7 @@ export const DecorationPage = () => {
                       </p>
                       <button 
                         onClick={() => window.open(WHATSAPP_LINK(`Halo Ryya Project! Saya tertarik dengan dekorasi ${service.title} (${service.category})`), '_blank')}
-                        className="flex items-center gap-2 text-white font-bold uppercase tracking-widest text-xs hover:text-brand-gold transition-colors"
+                        className="flex items-center gap-2 text-white font-bold uppercase tracking-widest text-xs hover:text-brand-rose transition-colors"
                       >
                         Konsultasi Sekarang <ArrowRight size={14} />
                       </button>

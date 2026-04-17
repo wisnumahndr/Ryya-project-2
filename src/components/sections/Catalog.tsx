@@ -30,7 +30,7 @@ export const Catalog = () => {
     return () => unsubscribe();
   }, []);
 
-  const displayProducts = isLive ? products : PRODUCTS;
+  const displayProducts = (isLive ? products : PRODUCTS).slice(0, 8);
 
   return (
     <section id="katalog" className="py-24 px-6 bg-white">
@@ -60,17 +60,17 @@ export const Catalog = () => {
                   referrerPolicy="no-referrer"
                 />
                 {product.label && (
-                  <div className="absolute top-2 right-2 bg-brand-gold text-white px-2 py-1 rounded-sm text-[8px] font-bold uppercase tracking-widest">
+                  <div className="absolute top-2 right-2 bg-brand-rose text-white px-2 py-1 rounded-sm text-[8px] font-bold uppercase tracking-widest">
                     {product.label}
                   </div>
                 )}
               </div>
               <div className="space-y-1">
                 <h3 className="text-base font-serif text-brand-dark">{product.name}</h3>
-                <p className="text-brand-gold text-sm font-semibold">{product.priceStart ? `Mulai ${formatIDR(product.priceStart)}` : 'Custom Budget'}</p>
+                <p className="text-brand-rose text-sm font-semibold">{product.priceStart ? `Mulai ${formatIDR(product.priceStart)}` : 'Custom Budget'}</p>
                 <button 
                   onClick={() => window.open(WHATSAPP_LINK(`Halo Ryya Project, saya tertarik dengan ${product.name}`), '_blank')}
-                  className="text-[10px] text-gray-400 uppercase tracking-widest hover:text-brand-gold transition-colors pt-2"
+                  className="text-[10px] text-gray-400 uppercase tracking-widest hover:text-brand-rose transition-colors pt-2"
                 >
                   Detail via WA
                 </button>

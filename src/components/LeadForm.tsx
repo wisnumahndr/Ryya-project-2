@@ -38,14 +38,14 @@ Saya ingin tanya lebih lanjut/order pesanan di atas. Terima kasih!`;
   return (
     <div className="relative group">
       {/* Decorative Blur */}
-      <div className="absolute -inset-1 bg-gradient-to-r from-brand-gold/20 to-brand-sage/20 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
+      <div className="absolute -inset-1 bg-gradient-to-r from-brand-rose/20 to-brand-maroon/20 rounded-3xl blur opacity-25 group-hover:opacity-50 transition duration-1000 group-hover:duration-200"></div>
       
       <form 
         onSubmit={handleSubmit(onSubmit)} 
         className="relative space-y-6 bg-white p-8 md:p-10 rounded-3xl shadow-2xl border border-brand-pink/10"
       >
         <div className="space-y-2 border-b border-brand-pink/10 pb-6">
-          <div className="flex items-center gap-2 text-brand-gold mb-1">
+          <div className="flex items-center gap-2 text-brand-rose mb-1">
             <MessageSquare size={18} />
             <span className="text-xs font-bold uppercase tracking-widest">Pemesanan Online</span>
           </div>
@@ -55,37 +55,37 @@ Saya ingin tanya lebih lanjut/order pesanan di atas. Terima kasih!`;
         
         <div className="space-y-4">
           <div className="space-y-1.5">
-            <label className="text-[10px] uppercase tracking-widest text-brand-sage font-bold flex items-center gap-2">
+            <label className="text-[10px] uppercase tracking-widest text-brand-maroon font-bold flex items-center gap-2">
               <User size={12} /> Nama Lengkap
             </label>
             <input
               {...register('nama')}
               placeholder="Contoh: Rina Amalia"
-              className="w-full px-4 py-3 text-sm rounded-xl border border-gray-100 bg-gray-50/50 focus:ring-2 focus:ring-brand-gold/20 focus:bg-white focus:border-brand-gold outline-none transition-all"
+              className="w-full px-4 py-3 text-sm rounded-xl border border-gray-100 bg-gray-50/50 focus:ring-2 focus:ring-brand-rose/20 focus:bg-white focus:border-brand-rose outline-none transition-all"
             />
             {errors.nama && <p className="text-red-500 text-[10px] font-medium">{errors.nama.message}</p>}
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-[10px] uppercase tracking-widest text-brand-sage font-bold flex items-center gap-2">
+            <label className="text-[10px] uppercase tracking-widest text-brand-maroon font-bold flex items-center gap-2">
               <MessageSquare size={12} /> Nomor WhatsApp
             </label>
             <input
               {...register('whatsapp')}
               placeholder="0812 3456 7890"
-              className="w-full px-4 py-3 text-sm rounded-xl border border-gray-100 bg-gray-50/50 focus:ring-2 focus:ring-brand-gold/20 focus:bg-white focus:border-brand-gold outline-none transition-all"
+              className="w-full px-4 py-3 text-sm rounded-xl border border-gray-100 bg-gray-50/50 focus:ring-2 focus:ring-brand-rose/20 focus:bg-white focus:border-brand-rose outline-none transition-all"
             />
             {errors.whatsapp && <p className="text-red-500 text-[10px] font-medium">{errors.whatsapp.message}</p>}
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="space-y-1.5">
-              <label className="text-[10px] uppercase tracking-widest text-brand-sage font-bold flex items-center gap-2">
+              <label className="text-[10px] uppercase tracking-widest text-brand-maroon font-bold flex items-center gap-2">
                 <Tag size={12} /> Kategori
               </label>
               <select
                 {...register('pesanan')}
-                className="w-full px-4 py-3 text-sm rounded-xl border border-gray-100 bg-gray-50/50 focus:ring-2 focus:ring-brand-gold/20 focus:bg-white focus:border-brand-gold outline-none transition-all appearance-none cursor-pointer"
+                className="w-full px-4 py-3 text-sm rounded-xl border border-gray-100 bg-gray-50/50 focus:ring-2 focus:ring-brand-rose/20 focus:bg-white focus:border-brand-rose outline-none transition-all appearance-none cursor-pointer"
               >
                 <option value="">Pilih Kategori</option>
                 <option value="Buket Bunga Fresh">Buket Bunga</option>
@@ -97,13 +97,13 @@ Saya ingin tanya lebih lanjut/order pesanan di atas. Terima kasih!`;
             </div>
 
             <div className="space-y-1.5">
-              <label className="text-[10px] uppercase tracking-widest text-brand-sage font-bold flex items-center gap-2">
+              <label className="text-[10px] uppercase tracking-widest text-brand-maroon font-bold flex items-center gap-2">
                 <Calendar size={12} /> Tanggal
               </label>
               <input
                 type="date"
                 {...register('tanggal')}
-                className="w-full px-4 py-3 text-sm rounded-xl border border-gray-100 bg-gray-50/50 focus:ring-2 focus:ring-brand-gold/20 focus:bg-white focus:border-brand-gold outline-none transition-all cursor-pointer"
+                className="w-full px-4 py-3 text-sm rounded-xl border border-gray-100 bg-gray-50/50 focus:ring-2 focus:ring-brand-rose/20 focus:bg-white focus:border-brand-rose outline-none transition-all cursor-pointer"
               />
               {errors.tanggal && <p className="text-red-500 text-[10px] font-medium">{errors.tanggal.message}</p>}
             </div>
@@ -112,7 +112,7 @@ Saya ingin tanya lebih lanjut/order pesanan di atas. Terima kasih!`;
 
         <Button 
           type="submit" 
-          className="w-full shadow-lg shadow-brand-gold/20 hover:shadow-xl hover:-translate-y-0.5" 
+          className="w-full shadow-lg shadow-brand-rose/20 hover:shadow-xl hover:-translate-y-0.5" 
           variant="gold" 
           size="lg"
           disabled={isSubmitting}
@@ -122,11 +122,11 @@ Saya ingin tanya lebih lanjut/order pesanan di atas. Terima kasih!`;
 
         <div className="flex items-center justify-between pt-6 border-t border-brand-pink/10">
           <div className="flex items-center gap-2 text-[10px] text-gray-400 font-bold uppercase tracking-widest">
-            <ShieldCheck size={14} className="text-brand-sage" />
+            <ShieldCheck size={14} className="text-brand-maroon" />
             Aman & Amanah
           </div>
           <div className="flex items-center gap-2 text-[10px] text-gray-400 font-bold uppercase tracking-widest">
-            <Clock size={14} className="text-brand-gold" />
+            <Clock size={14} className="text-brand-rose" />
             Fast Response
           </div>
         </div>

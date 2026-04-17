@@ -10,7 +10,7 @@ export const Hero = () => {
     <section className="relative min-h-[90vh] flex items-center pt-20 px-6 overflow-hidden">
       {/* Background Decor */}
       <div className="absolute top-20 right-[-10%] w-[50%] h-[50%] bg-brand-pink/30 rounded-full blur-[100px] -z-10" />
-      <div className="absolute bottom-10 left-[-5%] w-[40%] h-[40%] bg-brand-sage/20 rounded-full blur-[100px] -z-10" />
+      <div className="absolute bottom-10 left-[-5%] w-[40%] h-[40%] bg-brand-maroon/20 rounded-full blur-[100px] -z-10" />
 
       <div className="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
         <motion.div
@@ -19,7 +19,7 @@ export const Hero = () => {
           transition={{ duration: 0.8, ease: 'easeOut' }}
           className="space-y-8 text-center lg:text-left"
         >
-          <div className="inline-flex items-center gap-2 text-brand-sage text-lg font-serif italic mb-2">
+          <div className="inline-flex items-center gap-2 text-brand-maroon text-lg font-serif italic mb-2">
             <span>Elegance in Every Petal</span>
           </div>
           
@@ -84,7 +84,7 @@ export const Hero = () => {
             transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut' }}
             className="absolute -bottom-6 -left-6 md:-left-12 bg-white p-4 md:p-6 rounded-2xl shadow-xl z-20 flex items-center gap-4"
           >
-            <div className="w-12 h-12 bg-brand-pink rounded-full flex items-center justify-center text-brand-sage">
+            <div className="w-12 h-12 bg-brand-pink rounded-full flex items-center justify-center text-brand-maroon">
               <Flower />
             </div>
             <div>
@@ -93,8 +93,8 @@ export const Hero = () => {
             </div>
           </motion.div>
           {/* Decorative shapes */}
-          <div className="absolute -top-10 -right-10 w-40 h-40 border-2 border-brand-gold rounded-full -z-10 opacity-30" />
-          <div className="absolute -bottom-10 -right-10 w-60 h-60 bg-brand-sage rounded-[4rem] rotate-12 -z-10 opacity-10" />
+          <div className="absolute -top-10 -right-10 w-40 h-40 border-2 border-brand-rose rounded-full -z-10 opacity-30" />
+          <div className="absolute -bottom-10 -right-10 w-60 h-60 bg-brand-maroon rounded-[4rem] rotate-12 -z-10 opacity-10" />
         </motion.div>
       </div>
     </section>

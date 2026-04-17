@@ -59,14 +59,14 @@ export const Header = () => {
       </AnimatePresence>
       <header
         className={cn(
-          'fixed left-0 right-0 z-50 transition-all duration-300 px-6 py-4 border-b border-brand-gold/10',
+          'fixed left-0 right-0 z-50 transition-all duration-300 px-6 py-4 border-b border-brand-rose/10',
           activeEvent ? 'top-8' : 'top-0',
           isScrolled ? 'bg-brand-cream/90 backdrop-blur-md py-2 shadow-sm' : 'bg-transparent'
         )}
       >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <a href="/" className="flex items-center gap-2 group">
-          <span className="text-xl font-serif font-bold text-brand-gold uppercase tracking-[3px]">
+          <span className="text-xl font-serif font-bold text-brand-rose uppercase tracking-[3px]">
             Ryya Project
           </span>
         </a>
@@ -78,7 +78,7 @@ export const Header = () => {
               <a
                 key={item.label}
                 href={item.href}
-                className="text-sm font-medium hover:text-brand-sage transition-colors uppercase tracking-wider"
+                className="text-sm font-medium hover:text-brand-maroon transition-colors uppercase tracking-wider"
               >
                 {item.label}
               </a>
@@ -86,7 +86,7 @@ export const Header = () => {
               <Link
                 key={item.label}
                 to={item.href}
-                className="text-sm font-medium hover:text-brand-sage transition-colors uppercase tracking-wider"
+                className="text-sm font-medium hover:text-brand-maroon transition-colors uppercase tracking-wider"
               >
                 {item.label}
               </Link>

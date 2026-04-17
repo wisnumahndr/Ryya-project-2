@@ -5,15 +5,15 @@ export const Footer = () => {
     <footer className="bg-brand-dark text-white pt-16 pb-8 px-6">
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-12 mb-12">
         <div className="space-y-4">
-          <div className="text-2xl font-serif font-bold tracking-[3px] text-brand-gold uppercase">
+          <div className="text-2xl font-serif font-bold tracking-[3px] text-brand-rose uppercase">
             Ryya Project
           </div>
           <p className="text-gray-400 text-sm leading-relaxed">
             Buket & Dekorasi Custom yang Elegan, Unik, dan Berkesan untuk Setiap Momen Spesial Anda.
           </p>
           <div className="flex gap-4">
-            <a href="https://instagram.com" target="_blank" className="hover:text-brand-sage transition-colors"><Instagram size={20} /></a>
-            <a href="https://facebook.com" target="_blank" className="hover:text-brand-sage transition-colors"><Facebook size={20} /></a>
+            <a href="https://instagram.com" target="_blank" className="hover:text-brand-maroon transition-colors"><Instagram size={20} /></a>
+            <a href="https://facebook.com" target="_blank" className="hover:text-brand-maroon transition-colors"><Facebook size={20} /></a>
           </div>
         </div>
 
@@ -32,15 +32,15 @@ export const Footer = () => {
           <h4 className="font-serif text-lg mb-6">Kontak Kami</h4>
           <ul className="space-y-3 text-sm text-gray-400">
             <li className="flex items-start gap-3">
-              <MapPin size={18} className="text-brand-sage shrink-0" />
+              <MapPin size={18} className="text-brand-maroon shrink-0" />
               <span>Bekasi, Jawa Barat</span>
             </li>
             <li className="flex items-center gap-3">
-              <Phone size={18} className="text-brand-sage shrink-0" />
+              <Phone size={18} className="text-brand-maroon shrink-0" />
               <span>+62 812-3456-7890</span>
             </li>
             <li className="flex items-center gap-3">
-              <Mail size={18} className="text-brand-sage shrink-0" />
+              <Mail size={18} className="text-brand-maroon shrink-0" />
               <span>ryya.project@gmail.com</span>
             </li>
           </ul>

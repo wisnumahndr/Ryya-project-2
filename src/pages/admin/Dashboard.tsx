@@ -19,6 +19,8 @@ export const Dashboard = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingItem, setEditingItem] = useState<Item | null>(null);
   const [formData, setFormData] = useState<any>({});
+  const [isNewCategory, setIsNewCategory] = useState(false);
+  const [newCatValue, setNewCatValue] = useState('');
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -53,7 +55,12 @@ export const Dashboard = () => {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
-      const dataToSave = { ...formData };
+      let finalCategory = formData.category;
+      if (isNewCategory && newCatValue.trim()) {
+        finalCategory = newCatValue.trim();
+      }
+
+      const dataToSave = { ...formData, category: finalCategory };
       if (activeTab === 'events') {
         delete dataToSave.productIds; // No longer needed
       }
@@ -72,6 +79,8 @@ export const Dashboard = () => {
       setIsModalOpen(false);
       setEditingItem(null);
       setFormData({});
+      setIsNewCategory(false);
+      setNewCatValue('');
     } catch (error) {
       handleFirestoreError(error, OperationType.WRITE, activeTab);
     }
@@ -89,6 +98,8 @@ export const Dashboard = () => {
   const openModal = (item: Item | null = null) => {
     setEditingItem(item);
     setFormData(item || {});
+    setIsNewCategory(false);
+    setNewCatValue('');
     setIsModalOpen(true);
   };
 
@@ -96,26 +107,26 @@ export const Dashboard = () => {
     <div className="min-h-screen bg-brand-cream flex">
       {/* Sidebar */}
       <aside className="w-64 bg-white shadow-xl flex flex-col items-center py-10 px-6 gap-10">
-        <div className="text-xl font-serif font-bold tracking-[2px] text-brand-gold uppercase text-center">
+        <div className="text-xl font-serif font-bold tracking-[2px] text-brand-maroon uppercase text-center">
           Admin <br /> Portal
         </div>
 
         <nav className="w-full flex flex-col gap-2">
           <button 
             onClick={() => setActiveTab('products')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'products' ? 'bg-brand-gold text-white shadow-lg' : 'text-gray-500 hover:bg-brand-pink/20'}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'products' ? 'bg-brand-maroon text-white shadow-lg' : 'text-gray-500 hover:bg-brand-pink/20'}`}
           >
             <Package size={18} /> Catalog
           </button>
           <button 
             onClick={() => setActiveTab('services')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'services' ? 'bg-brand-gold text-white shadow-lg' : 'text-gray-500 hover:bg-brand-pink/20'}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'services' ? 'bg-brand-maroon text-white shadow-lg' : 'text-gray-500 hover:bg-brand-pink/20'}`}
           >
             <Sparkles size={18} /> Services
           </button>
           <button 
             onClick={() => setActiveTab('events')}
-            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'events' ? 'bg-brand-gold text-white shadow-lg' : 'text-gray-500 hover:bg-brand-pink/20'}`}
+            className={`w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-all ${activeTab === 'events' ? 'bg-brand-maroon text-white shadow-lg' : 'text-gray-500 hover:bg-brand-pink/20'}`}
           >
             <Calendar size={18} /> Events
           </button>
@@ -138,14 +149,14 @@ export const Dashboard = () => {
             <h1 className="text-4xl font-serif text-brand-dark capitalize">Manage {activeTab}</h1>
             <p className="text-gray-500">Update your website content in real-time.</p>
           </div>
-          <Button variant="gold" onClick={() => openModal()} className="flex items-center gap-2">
+          <Button variant="maroon" onClick={() => openModal()} className="flex items-center gap-2">
             <Plus size={18} /> Add New
           </Button>
         </header>
 
         {loading ? (
           <div className="h-64 flex items-center justify-center">
-            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-brand-gold"></div>
+            <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-brand-maroon"></div>
           </div>
         ) : (
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
@@ -168,13 +179,13 @@ export const Dashboard = () => {
                     )}
                   </div>
                   <p className="text-sm text-gray-500 line-clamp-1">{item.description || item.category}</p>
-                  {item.priceStart && <p className="text-brand-gold font-bold">Rp {item.priceStart.toLocaleString('id-ID')}</p>}
+                  {item.priceStart && <p className="text-brand-maroon font-bold">Rp {item.priceStart.toLocaleString('id-ID')}</p>}
                   {activeTab === 'events' && item.productIds && (
                     <p className="text-[10px] text-gray-400 font-mono italic">{item.productIds.length} Linked Products</p>
                   )}
                 </div>
                 <div className="flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button onClick={() => openModal(item)} className="p-2 text-brand-sage hover:bg-brand-cream rounded-lg"><Edit3 size={18} /></button>
+                  <button onClick={() => openModal(item)} className="p-2 text-brand-rose hover:bg-brand-cream rounded-lg"><Edit3 size={18} /></button>
                   <button onClick={() => handleDelete(item.id)} className="p-2 text-red-400 hover:bg-red-50 rounded-lg"><Trash2 size={18} /></button>
                 </div>
               </motion.div>
@@ -212,7 +223,7 @@ export const Dashboard = () => {
                       required 
                       value={formData.name || formData.title || ''} 
                       onChange={(e) => setFormData({ ...formData, [activeTab === 'events' ? 'title' : activeTab === 'products' ? 'name' : 'title']: e.target.value })}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-gold outline-none"
+                      className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-maroon outline-none"
                     />
                   </div>
                   {activeTab === 'events' && (
@@ -238,7 +249,7 @@ export const Dashboard = () => {
                           value={formData.themeColor || ''} 
                           placeholder="#FFD700"
                           onChange={(e) => setFormData({ ...formData, themeColor: e.target.value })}
-                          className="flex-1 px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-gold outline-none"
+                          className="flex-1 px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-maroon outline-none"
                         />
                         <div className="w-12 h-12 rounded-xl border" style={{ backgroundColor: formData.themeColor }} />
                       </div>
@@ -249,7 +260,7 @@ export const Dashboard = () => {
                         value={formData.description || ''} 
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                         rows={2}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-gold outline-none resize-none"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-maroon outline-none resize-none"
                       />
                     </div>
                   </div>
@@ -259,17 +270,40 @@ export const Dashboard = () => {
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-1">
                         <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Category</label>
-                        <select 
-                          required 
-                          value={formData.category || ''} 
-                          onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                          className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-gold outline-none"
-                        >
-                          <option value="">Select Category</option>
-                          {BOUQUET_CATEGORIES.map(cat => (
-                            <option key={cat} value={cat}>{cat}</option>
-                          ))}
-                        </select>
+                        {!isNewCategory ? (
+                          <select 
+                            required 
+                            value={formData.category || ''} 
+                            onChange={(e) => {
+                              if (e.target.value === 'NEW') setIsNewCategory(true);
+                              else setFormData({ ...formData, category: e.target.value });
+                            }}
+                            className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-maroon outline-none"
+                          >
+                            <option value="">Select Category</option>
+                            {BOUQUET_CATEGORIES.map(cat => (
+                              <option key={cat} value={cat}>{cat}</option>
+                            ))}
+                            <option value="NEW" className="text-brand-maroon font-bold">+ Tambah Kategori Baru</option>
+                          </select>
+                        ) : (
+                          <div className="flex gap-2">
+                            <input 
+                              required
+                              placeholder="Kategori Baru..."
+                              value={newCatValue}
+                              onChange={(e) => setNewCatValue(e.target.value)}
+                              className="flex-1 px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-gold outline-none"
+                            />
+                            <button 
+                              type="button" 
+                              onClick={() => { setIsNewCategory(false); setNewCatValue(''); }}
+                              className="px-3 bg-gray-100 rounded-xl text-gray-400"
+                            >
+                              <X size={16} />
+                            </button>
+                          </div>
+                        )}
                       </div>
                       <div className="space-y-1">
                         <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Price Start</label>
@@ -278,7 +312,7 @@ export const Dashboard = () => {
                           required 
                           value={formData.priceStart || ''} 
                           onChange={(e) => setFormData({ ...formData, priceStart: Number(e.target.value) })}
-                          className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-gold outline-none"
+                          className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-maroon outline-none"
                         />
                       </div>
                     </div>
@@ -288,7 +322,7 @@ export const Dashboard = () => {
                         value={formData.label || ''} 
                         onChange={(e) => setFormData({ ...formData, label: e.target.value })}
                         placeholder="Best Seller, Popular, etc."
-                        className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-gold outline-none"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-maroon outline-none"
                       />
                     </div>
                   </>
@@ -296,17 +330,40 @@ export const Dashboard = () => {
                   <>
                     <div className="space-y-1">
                       <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Category</label>
-                      <select 
-                        required 
-                        value={formData.category || ''} 
-                        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-gold outline-none"
-                      >
-                        <option value="">Select Category</option>
-                        {DECORATION_CATEGORIES.map(cat => (
-                          <option key={cat} value={cat}>{cat}</option>
-                        ))}
-                      </select>
+                      {!isNewCategory ? (
+                        <select 
+                          required 
+                          value={formData.category || ''} 
+                          onChange={(e) => {
+                            if (e.target.value === 'NEW') setIsNewCategory(true);
+                            else setFormData({ ...formData, category: e.target.value });
+                          }}
+                          className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-maroon outline-none"
+                        >
+                          <option value="">Select Category</option>
+                          {DECORATION_CATEGORIES.map(cat => (
+                            <option key={cat} value={cat}>{cat}</option>
+                          ))}
+                          <option value="NEW" className="text-brand-maroon font-bold">+ Tambah Kategori Baru</option>
+                        </select>
+                      ) : (
+                        <div className="flex gap-2">
+                          <input 
+                            required
+                            placeholder="Kategori Baru..."
+                            value={newCatValue}
+                            onChange={(e) => setNewCatValue(e.target.value)}
+                            className="flex-1 px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-maroon outline-none"
+                          />
+                          <button 
+                            type="button" 
+                            onClick={() => { setIsNewCategory(false); setNewCatValue(''); }}
+                            className="px-3 bg-gray-100 rounded-xl text-gray-400"
+                          >
+                            <X size={16} />
+                          </button>
+                        </div>
+                      )}
                     </div>
                     <div className="space-y-1">
                       <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Description</label>
@@ -315,7 +372,7 @@ export const Dashboard = () => {
                         value={formData.description || ''} 
                         onChange={(e) => setFormData({ ...formData, description: e.target.value })}
                         rows={3}
-                        className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-gold outline-none resize-none"
+                        className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-maroon outline-none resize-none"
                       />
                     </div>
                   </>
@@ -326,7 +383,7 @@ export const Dashboard = () => {
                     required 
                     value={formData.image || formData.bannerImage || ''} 
                     onChange={(e) => setFormData({ ...formData, [activeTab === 'events' ? 'bannerImage' : 'image']: e.target.value })}
-                    className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-gold outline-none"
+                    className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-maroon outline-none"
                   />
                   {(formData.image || formData.bannerImage) && (
                     <div className="mt-2 w-full h-32 rounded-xl overflow-hidden bg-gray-50 border border-brand-pink/10">

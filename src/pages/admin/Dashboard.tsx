@@ -52,14 +52,19 @@ export const Dashboard = () => {
   const handleSave = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
+      const dataToSave = { ...formData };
+      if (activeTab === 'events') {
+        delete dataToSave.productIds; // No longer needed
+      }
+
       if (editingItem) {
         await updateDoc(doc(db, activeTab, editingItem.id), {
-          ...formData,
+          ...dataToSave,
           updatedAt: serverTimestamp()
         });
       } else {
         await addDoc(collection(db, activeTab), {
-          ...formData,
+          ...dataToSave,
           createdAt: serverTimestamp()
         });
       }
@@ -224,53 +229,29 @@ export const Dashboard = () => {
                 </div>
 
                 {activeTab === 'events' && (
-                  <>
-                    <div className="grid grid-cols-2 gap-4">
-                      <div className="space-y-1">
-                        <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Theme Color (HEX)</label>
-                        <div className="flex gap-2">
-                          <input 
-                            value={formData.themeColor || ''} 
-                            placeholder="#FFD700"
-                            onChange={(e) => setFormData({ ...formData, themeColor: e.target.value })}
-                            className="flex-1 px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-gold outline-none"
-                          />
-                          <div className="w-12 h-12 rounded-xl border" style={{ backgroundColor: formData.themeColor }} />
-                        </div>
-                      </div>
-                      <div className="space-y-1">
-                        <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Description</label>
-                        <textarea 
-                          value={formData.description || ''} 
-                          onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                          rows={2}
-                          className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-gold outline-none resize-none"
+                  <div className="grid grid-cols-2 gap-4">
+                    <div className="space-y-1">
+                      <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Theme Color (HEX)</label>
+                      <div className="flex gap-2">
+                        <input 
+                          value={formData.themeColor || ''} 
+                          placeholder="#FFD700"
+                          onChange={(e) => setFormData({ ...formData, themeColor: e.target.value })}
+                          className="flex-1 px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-gold outline-none"
                         />
+                        <div className="w-12 h-12 rounded-xl border" style={{ backgroundColor: formData.themeColor }} />
                       </div>
                     </div>
                     <div className="space-y-1">
-                      <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Select Products</label>
-                      <div className="grid grid-cols-2 gap-2 h-32 overflow-y-auto p-2 bg-gray-50 rounded-xl border border-gray-100">
-                        {allProducts.map(p => (
-                          <button
-                            key={p.id}
-                            type="button"
-                            onClick={() => {
-                              const currentIds = formData.productIds || [];
-                              const newIds = currentIds.includes(p.id) ? currentIds.filter((id: string) => id !== p.id) : [...currentIds, p.id];
-                              setFormData({ ...formData, productIds: newIds });
-                            }}
-                            className={`flex items-center gap-2 px-3 py-2 rounded-lg text-xs transition-all ${formData.productIds?.includes(p.id) ? 'bg-brand-gold text-white' : 'hover:bg-brand-pink/20 text-gray-600'}`}
-                          >
-                            <div className={`w-4 h-4 rounded border flex items-center justify-center ${formData.productIds?.includes(p.id) ? 'border-white' : 'border-gray-300'}`}>
-                              {formData.productIds?.includes(p.id) && <Check size={10} />}
-                            </div>
-                            <span className="truncate">{p.name}</span>
-                          </button>
-                        ))}
-                      </div>
+                      <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Description</label>
+                      <textarea 
+                        value={formData.description || ''} 
+                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                        rows={2}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-gold outline-none resize-none"
+                      />
                     </div>
-                  </>
+                  </div>
                 )}
                 {activeTab === 'products' ? (
                   <>

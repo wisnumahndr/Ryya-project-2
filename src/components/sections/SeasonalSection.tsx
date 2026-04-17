@@ -18,7 +18,6 @@ interface EventData {
 
 export const SeasonalSection = () => {
   const [activeEvent, setActiveEvent] = useState<EventData | null>(null);
-  const [eventProducts, setEventProducts] = useState<any[]>([]);
 
   useEffect(() => {
     const q = query(collection(db, 'events'), where('isActive', '==', true));
@@ -26,15 +25,6 @@ export const SeasonalSection = () => {
       if (!snapshot.empty) {
         const event = { id: snapshot.docs[0].id, ...snapshot.docs[0].data() } as EventData;
         setActiveEvent(event);
-
-        if (event.productIds && event.productIds.length > 0) {
-          const productPromises = event.productIds.map(async (id: string) => {
-            const d = await getDoc(doc(db, 'products', id));
-            return d.exists() ? { id: d.id, ...d.data() } : null;
-          });
-          const prods = await Promise.all(productPromises);
-          setEventProducts(prods.filter(p => p !== null));
-        }
       } else {
         setActiveEvent(null);
       }
@@ -99,39 +89,6 @@ export const SeasonalSection = () => {
             </div>
           </motion.div>
         </div>
-
-        {eventProducts.length > 0 && (
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-            {eventProducts.slice(0, 3).map((product, idx) => (
-              <motion.div
-                key={product.id}
-                initial={{ opacity: 0, y: 30 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{ delay: idx * 0.1 }}
-                className="bg-white p-6 rounded-[2rem] shadow-xl hover:shadow-2xl transition-all group"
-              >
-                <div className="aspect-square rounded-2xl overflow-hidden mb-6 bg-gray-50">
-                  <img src={product.image} alt={product.name} className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700" referrerPolicy="no-referrer" />
-                </div>
-                <div className="space-y-4">
-                  <div className="flex justify-between items-start">
-                    <div>
-                      <h4 className="text-xl font-serif font-bold text-brand-dark">{product.name}</h4>
-                      <p className="text-xs text-gray-400 uppercase tracking-widest">{product.category}</p>
-                    </div>
-                    <p className="text-brand-gold font-bold">{formatIDR(product.priceStart)}</p>
-                  </div>
-                  <button 
-                    onClick={() => window.open(WHATSAPP_LINK(`Halo! Saya mau order ${product.name} untuk event ${activeEvent.title}`), '_blank')}
-                    className="w-full h-12 rounded-xl border border-gray-100 flex items-center justify-center gap-2 text-sm font-bold uppercase tracking-widest hover:bg-gray-50 transition-colors"
-                  >
-                    <ShoppingBag size={16} /> Order Now
-                  </button>
-                </div>
-              </motion.div>
-            ))}
-          </div>
-        )}
       </div>
     </section>
   );

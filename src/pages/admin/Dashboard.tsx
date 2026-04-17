@@ -159,37 +159,90 @@ export const Dashboard = () => {
             <div className="animate-spin rounded-full h-10 w-10 border-b-2 border-brand-maroon"></div>
           </div>
         ) : (
-          <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
-            {items.map((item) => (
-              <motion.div 
-                layout
-                key={item.id}
-                className="bg-white p-6 rounded-3xl shadow-sm border border-brand-pink/10 flex gap-6 group hover:shadow-xl transition-all"
-              >
-                <div className="w-24 h-24 rounded-2xl overflow-hidden bg-gray-50 shrink-0">
-                  <img src={item.image || item.bannerImage} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
-                </div>
-                <div className="flex-1 space-y-2">
-                  <div className="flex items-center gap-2">
-                    <h3 className="text-xl font-bold text-brand-dark">{item.name || item.title}</h3>
-                    {activeTab === 'events' && (
-                      <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${item.isActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
-                        {item.isActive ? 'Active' : 'Inactive'}
-                      </span>
-                    )}
-                  </div>
-                  <p className="text-sm text-gray-500 line-clamp-1">{item.description || item.category}</p>
-                  {item.priceStart && <p className="text-brand-maroon font-bold">Rp {item.priceStart.toLocaleString('id-ID')}</p>}
-                  {activeTab === 'events' && item.productIds && (
-                    <p className="text-[10px] text-gray-400 font-mono italic">{item.productIds.length} Linked Products</p>
-                  )}
-                </div>
-                <div className="flex flex-col gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
-                  <button onClick={() => openModal(item)} className="p-2 text-brand-rose hover:bg-brand-cream rounded-lg"><Edit3 size={18} /></button>
-                  <button onClick={() => handleDelete(item.id)} className="p-2 text-red-400 hover:bg-red-50 rounded-lg"><Trash2 size={18} /></button>
-                </div>
-              </motion.div>
-            ))}
+          <div className="bg-white rounded-[2.5rem] shadow-sm border border-brand-pink/10 overflow-hidden">
+            <div className="overflow-x-auto">
+              <table className="w-full text-left border-collapse">
+                <thead>
+                  <tr className="border-b border-brand-pink/10 bg-gray-50/50">
+                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-gray-400">Item</th>
+                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-gray-400">Kategori</th>
+                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-gray-400">Harga</th>
+                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-gray-400">Label/Status</th>
+                    <th className="px-8 py-5 text-[10px] font-bold uppercase tracking-widest text-gray-400 text-right">Aksi</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-brand-pink/5">
+                  <AnimatePresence mode="popLayout">
+                    {items.map((item) => (
+                      <motion.tr 
+                        layout
+                        initial={{ opacity: 0 }}
+                        animate={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        key={item.id}
+                        className="group hover:bg-brand-pink/5 transition-colors"
+                      >
+                        <td className="px-8 py-4">
+                          <div className="flex items-center gap-4">
+                            <div className="w-12 h-12 rounded-xl overflow-hidden bg-gray-50 shrink-0 border border-brand-pink/10">
+                              <img src={item.image || item.bannerImage} alt="" className="w-full h-full object-cover" referrerPolicy="no-referrer" />
+                            </div>
+                            <div>
+                              <p className="font-bold text-brand-dark leading-tight">{item.name || item.title}</p>
+                              {activeTab === 'events' && (
+                                <span className={`text-[9px] font-bold uppercase px-2 py-0.5 rounded ${item.isActive ? 'bg-green-100 text-green-700' : 'bg-gray-100 text-gray-500'}`}>
+                                  {item.isActive ? 'Active' : 'Inactive'}
+                                </span>
+                              )}
+                            </div>
+                          </div>
+                        </td>
+                        <td className="px-8 py-4">
+                          <span className="text-xs text-gray-500 font-medium">{item.category || (activeTab === 'events' ? 'Seasonal' : '-')}</span>
+                        </td>
+                        <td className="px-8 py-4">
+                          <span className="text-sm font-bold text-brand-maroon">
+                            {item.priceStart ? `Rp ${item.priceStart.toLocaleString('id-ID')}` : '-'}
+                          </span>
+                        </td>
+                        <td className="px-8 py-4">
+                          {item.label ? (
+                            <span className="bg-brand-rose/10 text-brand-rose text-[9px] font-bold uppercase tracking-widest px-2 py-1 rounded-lg">
+                              {item.label}
+                            </span>
+                          ) : (
+                            <span className="text-gray-300 text-[10px]">—</span>
+                          )}
+                        </td>
+                        <td className="px-8 py-4">
+                          <div className="flex items-center justify-end gap-2 opacity-0 group-hover:opacity-100 transition-opacity">
+                            <button 
+                              onClick={() => openModal(item)} 
+                              className="p-2 text-brand-rose hover:bg-brand-pink/20 rounded-lg transition-colors"
+                              title="Edit"
+                            >
+                              <Edit3 size={16} />
+                            </button>
+                            <button 
+                              onClick={() => handleDelete(item.id)} 
+                              className="p-2 text-red-400 hover:bg-red-50 rounded-lg transition-colors"
+                              title="Hapus"
+                            >
+                              <Trash2 size={16} />
+                            </button>
+                          </div>
+                        </td>
+                      </motion.tr>
+                    ))}
+                  </AnimatePresence>
+                </tbody>
+              </table>
+            </div>
+            {items.length === 0 && (
+              <div className="py-20 text-center text-gray-400">
+                Belum ada data tersedia.
+              </div>
+            )}
           </div>
         )}
       </main>

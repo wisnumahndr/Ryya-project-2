@@ -12,11 +12,17 @@ import { Trust } from './components/sections/Trust';
 import { Location } from './components/sections/Location';
 import { Gallery } from './components/sections/Gallery';
 import { FAQ } from './components/sections/FAQ';
+import { SeasonalSection } from './components/sections/SeasonalSection';
 import { Footer } from './components/Footer';
 import { WhatsAppButton } from './components/WhatsAppButton';
 import { motion, useScroll, useSpring } from 'motion/react';
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import { AuthProvider } from './context/AuthContext';
+import { Login } from './pages/admin/Login';
+import { Dashboard } from './pages/admin/Dashboard';
+import { ProtectedRoute } from './components/ProtectedRoute';
 
-export default function App() {
+function MainWebsite() {
   const { scrollYProgress } = useScroll();
   const scaleX = useSpring(scrollYProgress, {
     stiffness: 100,
@@ -36,6 +42,7 @@ export default function App() {
       
       <main>
         <Hero />
+        <SeasonalSection />
         <Catalog />
         <Services />
         <Promo />
@@ -60,5 +67,26 @@ export default function App() {
         </motion.button>
       </div>
     </div>
+  );
+}
+
+export default function App() {
+  return (
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<MainWebsite />} />
+          <Route path="/admin/login" element={<Login />} />
+          <Route 
+            path="/admin" 
+            element={
+              <ProtectedRoute adminOnly>
+                <Dashboard />
+              </ProtectedRoute>
+            } 
+          />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }

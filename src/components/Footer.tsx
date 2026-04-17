@@ -56,8 +56,16 @@ export const Footer = () => {
         </div>
       </div>
       
-      <div className="max-w-7xl mx-auto pt-8 border-t border-gray-800 text-center text-sm text-gray-500">
-        <p>&copy; {new Date().getFullYear()} Ryya Project. All rights reserved.</p>
+      <div className="max-w-7xl mx-auto pt-8 border-t border-gray-800 text-center space-y-4">
+        <p className="text-sm text-gray-500">&copy; {new Date().getFullYear()} Ryya Project. All rights reserved.</p>
+        <div className="flex justify-center">
+          <a 
+            href="/admin" 
+            className="text-[10px] text-gray-600 hover:text-brand-gold uppercase tracking-[2px] transition-colors"
+          >
+            Admin Portal
+          </a>
+        </div>
       </div>
     </footer>
   );

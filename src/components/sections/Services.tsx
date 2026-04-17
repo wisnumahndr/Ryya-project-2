@@ -1,9 +1,34 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { SERVICES } from '../../constants';
+import { SERVICES, WHATSAPP_LINK } from '../../constants';
 import { Button } from '../Button';
-import { WHATSAPP_LINK } from '../../constants';
+import { db, collection, query, onSnapshot, orderBy } from '../../lib/firebase';
+import { Service } from '../../types';
 
 export const Services = () => {
+  const [services, setServices] = useState<Service[]>([]);
+  const [isLive, setIsLive] = useState(false);
+
+  useEffect(() => {
+    const q = query(collection(db, 'services'), orderBy('createdAt', 'desc'));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      console.log(`Services snapshot: ${snapshot.empty ? 'empty' : 'data found'}`);
+      if (!snapshot.empty) {
+        const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Service));
+        setServices(data);
+        setIsLive(true);
+      } else {
+        setIsLive(false);
+      }
+    }, (error) => {
+      console.error("Services Firestore error:", error);
+      setIsLive(false);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const displayServices = isLive ? services : SERVICES;
+
   return (
     <section id="dekorasi" className="py-24 px-6 bg-brand-cream/50">
       <div className="max-w-7xl mx-auto">
@@ -23,7 +48,7 @@ export const Services = () => {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {SERVICES.map((service, idx) => (
+          {displayServices.map((service, idx) => (
             <motion.div
               key={service.id}
               initial={{ opacity: 0, scale: 0.95 }}

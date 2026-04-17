@@ -1,0 +1,75 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "App users with roles for admin portal access.",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "email": { "type": "string", "format": "email" },
+        "role": { "type": "string", "enum": ["admin", "user"] },
+        "displayName": { "type": "string" }
+      },
+      "required": ["uid", "email", "role"]
+    },
+    "Product": {
+      "title": "Product",
+      "description": "Items in the bouquet catalog.",
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" },
+        "category": { "type": "string" },
+        "priceStart": { "type": "number" },
+        "image": { "type": "string", "format": "url" },
+        "label": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["name", "category", "priceStart", "image"]
+    },
+    "Service": {
+      "title": "Service",
+      "description": "Decoration services offered.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "image": { "type": "string", "format": "url" },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "description", "image"]
+    },
+    "Event": {
+      "title": "Seasonal Event",
+      "description": "Seasonal promo events like Valentine, Mother's Day, etc.",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "description": { "type": "string" },
+        "bannerImage": { "type": "string", "format": "url" },
+        "themeColor": { "type": "string" },
+        "isActive": { "type": "boolean" },
+        "productIds": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["title", "isActive"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles and roles."
+    },
+    "/products/{productId}": {
+      "schema": "Product",
+      "description": "Catalog of products."
+    },
+    "/services/{serviceId}": {
+      "schema": "Service",
+      "description": "Decoration services."
+    },
+    "/events/{eventId}": {
+      "schema": "Event",
+      "description": "Seasonal promotional events."
+    }
+  }
+}

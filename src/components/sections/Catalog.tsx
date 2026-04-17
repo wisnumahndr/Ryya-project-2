@@ -1,11 +1,35 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { PRODUCTS } from '../../constants';
+import { PRODUCTS, WHATSAPP_LINK } from '../../constants';
 import { formatIDR } from '../../lib/utils';
 import { Button } from '../Button';
-import { ShoppingBag } from 'lucide-react';
-import { WHATSAPP_LINK } from '../../constants';
+import { db, collection, query, onSnapshot, orderBy } from '../../lib/firebase';
+import { Product } from '../../types';
 
 export const Catalog = () => {
+  const [products, setProducts] = useState<Product[]>([]);
+  const [isLive, setIsLive] = useState(false);
+
+  useEffect(() => {
+    const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      console.log(`Catalog snapshot: ${snapshot.empty ? 'empty' : 'data found'}`);
+      if (!snapshot.empty) {
+        const data = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() } as Product));
+        setProducts(data);
+        setIsLive(true);
+      } else {
+        setIsLive(false);
+      }
+    }, (error) => {
+      console.error("Catalog Firestore error:", error);
+      setIsLive(false); // Fallback to mock on error
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const displayProducts = isLive ? products : PRODUCTS;
+
   return (
     <section id="katalog" className="py-24 px-6 bg-white">
       <div className="max-w-7xl mx-auto">
@@ -17,7 +41,7 @@ export const Catalog = () => {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-          {PRODUCTS.map((product, idx) => (
+          {displayProducts.map((product, idx) => (
             <motion.div
               key={product.id}
               initial={{ opacity: 0, scale: 0.95 }}

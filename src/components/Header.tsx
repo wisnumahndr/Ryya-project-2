@@ -1,13 +1,15 @@
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { Menu, X, Flower } from 'lucide-react';
+import { Menu, X, Flower, Sparkles } from 'lucide-react';
 import { cn } from '../lib/utils';
 import { Button } from './Button';
 import { WHATSAPP_LINK } from '../constants';
+import { db, collection, query, where, onSnapshot } from '../lib/firebase';
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [activeEvent, setActiveEvent] = useState<any>(null);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -15,6 +17,15 @@ export const Header = () => {
     };
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const q = query(collection(db, 'events'), where('isActive', '==', true));
+    const unsubscribe = onSnapshot(q, (snapshot) => {
+      if (!snapshot.empty) setActiveEvent(snapshot.docs[0].data());
+      else setActiveEvent(null);
+    });
+    return () => unsubscribe();
   }, []);
 
   const menuItems = [
@@ -26,12 +37,29 @@ export const Header = () => {
   ];
 
   return (
-    <header
-      className={cn(
-        'fixed top-0 left-0 right-0 z-50 transition-all duration-300 px-6 py-4 border-b border-brand-gold/10',
-        isScrolled ? 'bg-brand-cream/90 backdrop-blur-md py-2' : 'bg-transparent'
-      )}
-    >
+    <>
+      <AnimatePresence>
+        {activeEvent && (
+          <motion.div 
+            initial={{ y: -50 }}
+            animate={{ y: 0 }}
+            exit={{ y: -50 }}
+            className="fixed top-0 left-0 right-0 z-[60] py-2 px-6 flex items-center justify-center gap-3 text-white text-[10px] font-bold uppercase tracking-[2px]"
+            style={{ backgroundColor: activeEvent.themeColor || '#C5A059' }}
+          >
+            <Sparkles size={12} className="animate-pulse" />
+            <span>{activeEvent.title} Special Collection is here!</span>
+            <a href="#special" className="underline hover:no-underline">Shop Now</a>
+          </motion.div>
+        )}
+      </AnimatePresence>
+      <header
+        className={cn(
+          'fixed left-0 right-0 z-50 transition-all duration-300 px-6 py-4 border-b border-brand-gold/10',
+          activeEvent ? 'top-8' : 'top-0',
+          isScrolled ? 'bg-brand-cream/90 backdrop-blur-md py-2 shadow-sm' : 'bg-transparent'
+        )}
+      >
       <div className="max-w-7xl mx-auto flex items-center justify-between">
         <a href="/" className="flex items-center gap-2 group">
           <span className="text-xl font-serif font-bold text-brand-gold uppercase tracking-[3px]">
@@ -97,6 +125,7 @@ export const Header = () => {
           </motion.div>
         )}
       </AnimatePresence>
-    </header>
+      </header>
+    </>
   );
 };

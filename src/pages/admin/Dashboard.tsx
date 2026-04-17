@@ -4,6 +4,7 @@ import { motion, AnimatePresence } from 'motion/react';
 import { Plus, Trash2, Edit3, LogOut, Package, Sparkles, X, Save, Calendar, Check, AlertCircle } from 'lucide-react';
 import { Button } from '../../components/Button';
 import { useNavigate } from 'react-router-dom';
+import { BOUQUET_CATEGORIES, DECORATION_CATEGORIES } from '../../constants';
 
 interface Item {
   id: string;
@@ -258,12 +259,17 @@ export const Dashboard = () => {
                     <div className="grid grid-cols-2 gap-4">
                       <div className="space-y-1">
                         <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Category</label>
-                        <input 
+                        <select 
                           required 
                           value={formData.category || ''} 
                           onChange={(e) => setFormData({ ...formData, category: e.target.value })}
                           className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-gold outline-none"
-                        />
+                        >
+                          <option value="">Select Category</option>
+                          {BOUQUET_CATEGORIES.map(cat => (
+                            <option key={cat} value={cat}>{cat}</option>
+                          ))}
+                        </select>
                       </div>
                       <div className="space-y-1">
                         <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Price Start</label>
@@ -287,16 +293,32 @@ export const Dashboard = () => {
                     </div>
                   </>
                 ) : activeTab === 'services' ? (
-                  <div className="space-y-1">
-                    <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Description</label>
-                    <textarea 
-                      required 
-                      value={formData.description || ''} 
-                      onChange={(e) => setFormData({ ...formData, description: e.target.value })}
-                      rows={3}
-                      className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-gold outline-none resize-none"
-                    />
-                  </div>
+                  <>
+                    <div className="space-y-1">
+                      <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Category</label>
+                      <select 
+                        required 
+                        value={formData.category || ''} 
+                        onChange={(e) => setFormData({ ...formData, category: e.target.value })}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-gold outline-none"
+                      >
+                        <option value="">Select Category</option>
+                        {DECORATION_CATEGORIES.map(cat => (
+                          <option key={cat} value={cat}>{cat}</option>
+                        ))}
+                      </select>
+                    </div>
+                    <div className="space-y-1">
+                      <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">Description</label>
+                      <textarea 
+                        required 
+                        value={formData.description || ''} 
+                        onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+                        rows={3}
+                        className="w-full px-4 py-3 rounded-xl border border-gray-100 bg-gray-50 focus:ring-2 focus:ring-brand-gold outline-none resize-none"
+                      />
+                    </div>
+                  </>
                 ) : null}
                 <div className="space-y-1">
                   <label className="text-[10px] uppercase tracking-widest font-bold text-gray-400">{activeTab === 'events' ? 'Banner Image URL' : 'Image URL'}</label>

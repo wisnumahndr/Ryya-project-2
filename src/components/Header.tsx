@@ -5,11 +5,15 @@ import { cn } from '../lib/utils';
 import { Button } from './Button';
 import { WHATSAPP_LINK } from '../constants';
 import { db, collection, query, where, onSnapshot } from '../lib/firebase';
+import { Link, useLocation } from 'react-router-dom';
 
 export const Header = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [activeEvent, setActiveEvent] = useState<any>(null);
+  const location = useLocation();
+
+  const isHome = location.pathname === '/';
 
   useEffect(() => {
     const handleScroll = () => {
@@ -29,11 +33,11 @@ export const Header = () => {
   }, []);
 
   const menuItems = [
-    { label: 'Katalog', href: '#katalog' },
-    { label: 'Dekorasi', href: '#dekorasi' },
-    { label: 'Testimoni', href: '#testimoni' },
-    { label: 'Lokasi', href: '#lokasi' },
-    { label: 'FAQ', href: '#faq' },
+    { label: 'Katalog', href: '/katalog' },
+    { label: 'Dekorasi', href: '/dekorasi' },
+    { label: 'Testimoni', href: isHome ? '#testimoni' : '/#testimoni' },
+    { label: 'Lokasi', href: isHome ? '#lokasi' : '/#lokasi' },
+    { label: 'FAQ', href: isHome ? '#faq' : '/#faq' },
   ];
 
   return (
@@ -70,13 +74,23 @@ export const Header = () => {
         {/* Desktop Nav */}
         <nav className="hidden md:flex items-center gap-8">
           {menuItems.map((item) => (
-            <a
-              key={item.label}
-              href={item.href}
-              className="text-sm font-medium hover:text-brand-sage transition-colors uppercase tracking-wider"
-            >
-              {item.label}
-            </a>
+            item.href.startsWith('#') || item.href.startsWith('/#') ? (
+              <a
+                key={item.label}
+                href={item.href}
+                className="text-sm font-medium hover:text-brand-sage transition-colors uppercase tracking-wider"
+              >
+                {item.label}
+              </a>
+            ) : (
+              <Link
+                key={item.label}
+                to={item.href}
+                className="text-sm font-medium hover:text-brand-sage transition-colors uppercase tracking-wider"
+              >
+                {item.label}
+              </Link>
+            )
           ))}
           <Button
             size="sm"
@@ -106,14 +120,25 @@ export const Header = () => {
           >
             <div className="flex flex-col gap-4 p-6 border-t border-brand-pink">
               {menuItems.map((item) => (
-                <a
-                  key={item.label}
-                  href={item.href}
-                  className="text-lg font-medium"
-                  onClick={() => setIsMobileMenuOpen(false)}
-                >
-                  {item.label}
-                </a>
+                item.href.startsWith('#') || item.href.startsWith('/#') ? (
+                  <a
+                    key={item.label}
+                    href={item.href}
+                    className="text-lg font-medium"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </a>
+                ) : (
+                  <Link
+                    key={item.label}
+                    to={item.href}
+                    className="text-lg font-medium"
+                    onClick={() => setIsMobileMenuOpen(false)}
+                  >
+                    {item.label}
+                  </Link>
+                )
               ))}
               <Button
                 className="w-full"

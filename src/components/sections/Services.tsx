@@ -4,10 +4,12 @@ import { SERVICES, WHATSAPP_LINK } from '../../constants';
 import { Button } from '../Button';
 import { db, collection, query, onSnapshot, orderBy } from '../../lib/firebase';
 import { Service } from '../../types';
+import { useNavigate } from 'react-router-dom';
 
 export const Services = () => {
   const [services, setServices] = useState<Service[]>([]);
   const [isLive, setIsLive] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const q = query(collection(db, 'services'), orderBy('createdAt', 'desc'));
@@ -41,9 +43,9 @@ export const Services = () => {
           </div>
           <Button
             variant="gold"
-            onClick={() => window.open(WHATSAPP_LINK('Halo Ryya Project! Saya mau konsultasi dekorasi event.'), '_blank')}
+            onClick={() => navigate('/dekorasi')}
           >
-            Konsultasi Dekorasi
+            Lihat Semua Dekorasi
           </Button>
         </div>
 

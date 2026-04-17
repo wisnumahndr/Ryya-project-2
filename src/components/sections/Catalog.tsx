@@ -5,10 +5,12 @@ import { formatIDR } from '../../lib/utils';
 import { Button } from '../Button';
 import { db, collection, query, onSnapshot, orderBy } from '../../lib/firebase';
 import { Product } from '../../types';
+import { useNavigate } from 'react-router-dom';
 
 export const Catalog = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [isLive, setIsLive] = useState(false);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const q = query(collection(db, 'products'), orderBy('createdAt', 'desc'));
@@ -81,7 +83,7 @@ export const Catalog = () => {
           <Button
             variant="outline"
             size="lg"
-            onClick={() => window.open(WHATSAPP_LINK('Halo Ryya Project! Saya mau lihat katalog lengkapnya dong.'), '_blank')}
+            onClick={() => navigate('/katalog')}
           >
             Lihat Semua Produk
           </Button>

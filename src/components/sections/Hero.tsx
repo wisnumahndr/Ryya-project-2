@@ -2,8 +2,10 @@ import { motion } from 'motion/react';
 import { Button } from '../Button';
 import { WHATSAPP_LINK, HERO_IMAGE } from '../../constants';
 import { Flower } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
 export const Hero = () => {
+  const navigate = useNavigate();
   return (
     <section className="relative min-h-[90vh] flex items-center pt-20 px-6 overflow-hidden">
       {/* Background Decor */}
@@ -43,7 +45,7 @@ export const Hero = () => {
               size="lg"
               variant="outline"
               asMotion
-              onClick={() => document.getElementById('katalog')?.scrollIntoView({ behavior: 'smooth' })}
+              onClick={() => navigate('/katalog')}
             >
               Lihat Katalog
             </Button>

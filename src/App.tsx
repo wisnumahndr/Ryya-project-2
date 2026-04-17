@@ -21,6 +21,8 @@ import { AuthProvider } from './context/AuthContext';
 import { Login } from './pages/admin/Login';
 import { Dashboard } from './pages/admin/Dashboard';
 import { ProtectedRoute } from './components/ProtectedRoute';
+import { CatalogPage } from './pages/CatalogPage';
+import { DecorationPage } from './pages/DecorationPage';
 
 function MainWebsite() {
   const { scrollYProgress } = useScroll();
@@ -76,6 +78,8 @@ export default function App() {
       <Router>
         <Routes>
           <Route path="/" element={<MainWebsite />} />
+          <Route path="/katalog" element={<CatalogPage />} />
+          <Route path="/dekorasi" element={<DecorationPage />} />
           <Route path="/admin/login" element={<Login />} />
           <Route 
             path="/admin" 
